@@ -1,0 +1,14 @@
+* SPICE3 file created from diff_amp.ext - technology: sky130A
+
+X0 Vdd VG34 VG34 Vdd sky130_fd_pr__pfet_01v8 ad=0.96 pd=4.4 as=0.96 ps=4.4 w=1.6 l=0.4
+X1 VS12 vin1 VG34 Gnd sky130_fd_pr__nfet_01v8 ad=0.72 pd=3.6 as=0.72 ps=3.6 w=1.2 l=0.4
+X2 vout vinv2 Vdd Vdd sky130_fd_pr__pfet_01v8 ad=1.26 pd=5.4 as=1.26 ps=5.4 w=2.1 l=0.4
+X3 vinv VG34 Vdd Vdd sky130_fd_pr__pfet_01v8 ad=0.96 pd=4.4 as=0.96 ps=4.4 w=1.6 l=0.4
+X4 a_200_n920# a_200_n920# Gnd Gnd sky130_fd_pr__nfet_01v8 ad=0.42 pd=2.6 as=0.42 ps=2.6 w=0.7 l=0.4
+X5 Vdd a_200_n920# Gnd sky130_fd_pr__res_xhigh_po w=0.4 l=1.16
+X6 Gnd a_200_n920# VS12 Gnd sky130_fd_pr__nfet_01v8 ad=0.42 pd=2.6 as=0.42 ps=2.6 w=0.7 l=0.4
+X7 vinv vin2 VS12 Gnd sky130_fd_pr__nfet_01v8 ad=0.72 pd=3.6 as=0.72 ps=3.6 w=1.2 l=0.4
+X8 vinv2 vinv Gnd Gnd sky130_fd_pr__nfet_01v8 ad=0.3 pd=2.2 as=0.3 ps=2.2 w=0.5 l=0.4
+X9 vout vinv2 Gnd Gnd sky130_fd_pr__nfet_01v8 ad=0.3 pd=2.2 as=0.3 ps=2.2 w=0.5 l=0.4
+X10 vinv2 vinv Vdd Vdd sky130_fd_pr__pfet_01v8 ad=1.26 pd=5.4 as=1.26 ps=5.4 w=2.1 l=0.4
+C0 Vdd Gnd 3.58881f 
