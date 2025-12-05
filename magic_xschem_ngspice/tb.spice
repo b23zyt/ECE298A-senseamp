@@ -1,0 +1,68 @@
+.include /home/harry/Work/ECE298A/diff_amp/diff_amp.spice
+.lib /usr/local/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+
+X1 vout gnd vin1 vin2 vdd vinv vamp diff_amp 
+
+
+Vpower vdd gnd 1.8
+
+VinA vin1 gnd DC 0.9 pulse(0.88, 0.92, 7.5ns, 0.1ns, 0.1ns, 7.5ns, 15.2ns) AC 0.1
+VinB vin2 gnd DC 0.9 pulse(0.92, 0.88, 7.5ns, 0.1ns, 0.1ns, 7.5ns, 15.2ns) 
+
+.control
+  * --- TRANSIENT ANALYSIS (Power & Timing) ---
+  tran 0.01ns 50ns
+  
+  meas tran avg_current AVG i(Vpower) from=0 to=50n
+  let avg_power = 1.8 * abs(avg_current)
+  print avg_power
+  
+  meas tran t_rise TRIG v(vout) VAL=0.18 RISE=1 TARG v(vout) VAL=1.62 RISE=1
+  meas tran t_fall TRIG v(vout) VAL=1.62 FALL=1 TARG v(vout) VAL=0.18 FALL=1
+  
+  meas tran t_delay TRIG v(vin1) VAL=0.9 CROSS=1 TARG v(vout) VAL=0.9 CROSS=1
+  print t_delay
+  
+  plot v(vin1) v(vin2) v(vamp) v(vout) title "Transient Response"
+
+
+* --- DC ANALYSIS ---
+  dc VinA 0.88 0.92 0.00001
+
+  meas dc vin_at_low_rail  FIND v(vin1) WHEN v(vout)=0.01
+  
+  meas dc vin_at_mid       FIND v(vin1) WHEN v(vout)=0.9
+  
+  meas dc vin_at_high_rail FIND v(vin1) WHEN v(vout)=1.79
+
+  let range_lower_half = vin_at_mid - vin_at_low_rail
+  
+  let range_upper_half = vin_at_high_rail - vin_at_mid
+  
+  let total_transition_width = vin_at_high_rail - vin_at_low_rail
+
+  print range_lower_half
+  print range_upper_half
+  print total_transition_width
+  
+  plot v(vout) v(vamp) vs v(vin1) title "DC Transfer Characteristic"
+  
+* --- AC ANALYSIS ---
+  ac dec 50 1 1G
+
+  let gain_lin = v(vamp) / v(vin1)
+
+  let ac_gain = db(gain_lin)
+
+  meas ac gain_dc FIND ac_gain AT=1
+  
+  let target_gain = gain_dc - 3
+  
+  meas ac bandwidth WHEN ac_gain=target_gain
+
+  plot ac_gain ylabel "Gain (dB)" title "AC Analysis"
+  *plot cph(gain_lin) ylabel "Phase (deg)"
+
+  print gain_dc
+  print bandwidth
+.endc

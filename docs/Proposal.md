@@ -41,7 +41,7 @@ Finalize Design by Nov 7
 
 ## **Schematic**
 
-![Alt text](Differential_Amplifier.png)
+![Alt text](images/Differential_Amplifier.png)
 
 
 ## **References**
